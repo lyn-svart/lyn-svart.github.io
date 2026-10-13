@@ -1171,6 +1171,42 @@
       .strip-divider { display: none; }
       .about-strip-inner { justify-content: center; }
     }
+    /* Language selector */
+    .language-switch {
+      display: flex;
+      flex-shrink: 0;
+      margin-left: 24px;
+      border: 1px solid rgba(180,200,255,0.18);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .language-switch button {
+      min-width: 36px;
+      min-height: 34px;
+      padding: 6px 8px;
+      border: 0;
+      background: transparent;
+      color: var(--silver-dim);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    .language-switch button[aria-pressed="true"] {
+      background: rgba(176,196,255,0.12);
+      color: var(--pixel);
+    }
+
+    .language-switch button:hover { color: var(--white); }
+    .language-switch button:focus-visible {
+      outline: 2px solid var(--pixel);
+      outline-offset: -3px;
+    }
+
+    @media (min-width: 901px) {
+      nav .nav-links { margin-left: auto; }
+    }
   </style>
 </head>
 <body>
@@ -1191,6 +1227,10 @@
       <li><a href="#download">İNDİR</a></li>
       <li><a href="#support">DESTEK</a></li>
     </ul>
+    <div class="language-switch" role="group" aria-label="Dil seçimi">
+      <button type="button" data-language="tr" lang="tr" aria-label="Türkçe" aria-pressed="true">TR</button>
+      <button type="button" data-language="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+    </div>
   </nav>
 
   <!-- ═══ HERO ═══ -->
@@ -1601,6 +1641,128 @@
       });
     }, { threshold: 0.08 });
     reveals.forEach(el => observer.observe(el));
+  </script>
+  <script>
+    // Translate text nodes only, preserving the original markup and Turkish text.
+    (() => {
+      const english = {
+        'STÜDYO': 'STUDIO',
+        'OYUNLAR': 'GAMES',
+        'İNDİR': 'DOWNLOAD',
+        'DESTEK': 'SUPPORT',
+        'Mobil platformlarda özgün, bağımlılık yapan deneyimler tasarlıyoruz.': 'We design original, addictive experiences for mobile platforms.',
+        '▶ OYUNLARIMIZ': '▶ OUR GAMES',
+        'HAKKIMIZDA': 'ABOUT US',
+        'KAYDIR': 'SCROLL',
+        'BAĞIMSIZ STÜDYO': 'INDEPENDENT STUDIO',
+        'İNTERNET GEREKMEZ': 'NO INTERNET REQUIRED',
+        'ÜCRETSİZ İNDİR': 'FREE DOWNLOAD',
+        'KİM BİZ': 'WHO WE ARE',
+        'PİKSELDEN': 'FROM PIXELS TO',
+        'TUTKU': 'PASSION',
+        'BBI Pixel, bağımsız bir mobil oyun stüdyosudur. Oyuncuların saatlerce oynamak isteyeceği deneyimler yaratıyoruz.': 'BBI Pixel is an independent mobile game studio. We create experiences that players will want to enjoy for hours.',
+        'OYUNCU ODAKLI': 'PLAYER FOCUSED',
+        'Her karar oyuncunun deneyimini iyileştirmek için alınır.': 'Every decision is made to improve the player experience.',
+        'SÜREKLİ GELİŞİM': 'CONTINUOUS IMPROVEMENT',
+        'Geri bildirim dinler, günceller, daha iyisini yaparız.': 'We listen to feedback, update, and keep improving.',
+        'ÖZGÜN FİKİRLER': 'ORIGINAL IDEAS',
+        'Kopyalamayız; kendi sesimizle, kendi tarzımızla üretiriz.': 'We do not copy; we create with our own voice and style.',
+        'MOBİL ÖNCELİK': 'MOBILE FIRST',
+        "iOS ve Android'in en iyi deneyimini sunmak için optimize ederiz.": 'We optimize to deliver the best experience on iOS and Android.',
+        'PORTFÖY': 'PORTFOLIO',
+        'OYUNLARIMIZ': 'OUR GAMES',
+        'TÜM DETAYLAR →': 'ALL DETAILS →',
+        '⚽ KARİYER SİMÜLASYONU': '⚽ CAREER SIMULATION',
+        'Alt liglerden dünya sahnesine yükselen bir futbolcunun kariyerini sen yönet. Transfer, maç, şöhret — her şey senin elinde.': 'Manage the career of a footballer rising from the lower leagues to the world stage. Transfers, matches, fame — everything is in your hands.',
+        'ÜCRETSİZ': 'FREE',
+        'TEK OYUNCULU': 'SINGLE PLAYER',
+        'YAKINDA': 'COMING SOON',
+        '— Bilinmiyor': '— Unknown',
+        'Yeni oyun geliyor...': 'A new game is coming...',
+        'Bir sonraki projemiz üzerinde çalışıyoruz. Duyurular için takipte kalın.': 'We are working on our next project. Stay tuned for announcements.',
+        'BBI PIXEL OYUNU': 'A BBI PIXEL GAME',
+        'Sen menajer değil,': 'You are not the manager,',
+        'yıldızsın.': 'you are the star.',
+        'Sahada ter döken, kararlar alan, ün kazanan sensin. Her maç, her transfer, her kupa senin elinde.': 'You are the one working hard on the pitch, making decisions, and earning fame. Every match, every transfer, every trophy is in your hands.',
+        '✓ ÜCRETSİZ': '✓ FREE',
+        'DÜNYA YILDIZI': 'WORLD STAR',
+        'TRANSFER SEZONU': 'TRANSFER SEASON',
+        'SEZON': 'SEASONS',
+        '2 PLATFORM': '2 PLATFORMS',
+        'ÖZELLİKLER': 'FEATURES',
+        'OYUN İÇİ DENEYİM': 'IN-GAME EXPERIENCE',
+        'YETENEK GELİŞİMİ': 'SKILL DEVELOPMENT',
+        'Kariyerin boyunca yeni beceriler kazan, yeteneklerini geliştirerek ligde fark yarat.': 'Gain new skills throughout your career and develop your abilities to stand out in the league.',
+        'TRANSFER PAZARI': 'TRANSFER MARKET',
+        'Dünyanın en büyük kulüpleriyle müzakere yap, rekor ücretlere transfer ol.': 'Negotiate with the biggest clubs in the world and move for record transfer fees.',
+        'MİLLİ TAKIM': 'NATIONAL TEAM',
+        'Performansın yeterliyse ulusal takımın kapıları açılır. Ülkeni şampiyonluğa taşı.': 'Perform well enough and the national team will come calling. Lead your country to the championship.',
+        'HIZLI & AKICI': 'FAST & SMOOTH',
+        'Maçları kendin oyna ya da hızlı simüle et. Her şey tek ekranda, tam kontrol sende.': 'Play matches yourself or simulate them quickly. Everything is on one screen, with you in full control.',
+        'NASIL OYNANIR': 'HOW TO PLAY',
+        'EFSANE OL,': 'BECOME A LEGEND,',
+        '4 ADIMDA': 'IN 4 STEPS',
+        'Genç bir akademi oyuncusundan dünya yıldızına giden yolculuk seni bekliyor.': 'Your journey from a young academy player to a world star awaits.',
+        'KARAKTERİNİ OLUŞTUR': 'CREATE YOUR CHARACTER',
+        'Pozisyonunu ve başlangıç özelliklerini seç. Kariyer sıfırdan başlıyor.': 'Choose your position and starting attributes. Your career starts from scratch.',
+        'MAÇ OYNA': 'PLAY MATCHES',
+        'Sahada göster kendini. Her performans daha büyük kulüplere kapı açar.': 'Prove yourself on the pitch. Every performance opens doors to bigger clubs.',
+        'TRANSFER OL': 'GET TRANSFERRED',
+        'Gelen teklifleri değerlendir, prestijli liglere geç, rekor sözleşmeler imzala.': 'Consider incoming offers, move to prestigious leagues, and sign record contracts.',
+        'EFSANE YAZ': 'MAKE HISTORY',
+        'Kupalar kazan, milli takımda forma giy, futbol tarihine adını yazdır.': 'Win trophies, play for your national team, and write your name in football history.',
+        '✓ TAMAMEN ÜCRETSİZ': '✓ COMPLETELY FREE',
+        'EFSANENİN SAHNEYE': 'TIME FOR THE LEGEND',
+        'ÇIKMA ZAMANI': 'TO TAKE THE STAGE',
+        "Internet bağlantısı gerekmez. iOS ve Android'de oynayabilirsin.": 'No internet connection required. You can play on iOS and Android.',
+        'YARDIM & İLETİŞİM': 'HELP & CONTACT',
+        'Oyunlarımızla ilgili bir sorun mu yaşıyorsunuz, önerileriniz mi var veya yardıma mı ihtiyacınız var? Destek ekibimize e-posta göndererek doğrudan ulaşabilirsiniz.': 'Having a problem with our games, have suggestions, or need help? You can contact our support team directly by email.',
+        '© 2025 · TÜM HAKLARI SAKLIDIR': '© 2025 · ALL RIGHTS RESERVED'
+      };
+
+      const textNodes = [];
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (node.parentElement.closest('script, style, .language-switch')) continue;
+        const original = node.nodeValue;
+        const key = original.trim();
+        if (Object.prototype.hasOwnProperty.call(english, key)) {
+          const leading = original.match(/^\s*/)[0];
+          const trailing = original.match(/\s*$/)[0];
+          textNodes.push({ node, original, translated: leading + english[key] + trailing });
+        }
+      }
+
+      const description = document.querySelector('meta[name="description"]');
+      const originalDescription = description.getAttribute('content');
+      const selector = document.querySelector('.language-switch');
+      const buttons = selector.querySelectorAll('[data-language]');
+      const storageKey = 'bbi-pixel-language';
+
+      function setLanguage(language) {
+        const current = language === 'en' ? 'en' : 'tr';
+        textNodes.forEach(({ node, original, translated }) => {
+          node.nodeValue = current === 'en' ? translated : original;
+        });
+        document.documentElement.lang = current;
+        description.setAttribute('content', current === 'en'
+          ? 'BBI Pixel — Indie game studio. We design, develop, and publish mobile games.'
+          : originalDescription);
+        selector.setAttribute('aria-label', current === 'en' ? 'Language selection' : 'Dil seçimi');
+        buttons.forEach(button => {
+          button.setAttribute('aria-pressed', String(button.dataset.language === current));
+        });
+        try { localStorage.setItem(storageKey, current); } catch (_) { /* Storage may be unavailable. */ }
+      }
+
+      buttons.forEach(button => {
+        button.addEventListener('click', () => setLanguage(button.dataset.language));
+      });
+      let savedLanguage = 'tr';
+      try { savedLanguage = localStorage.getItem(storageKey) || 'tr'; } catch (_) { /* Keep Turkish as the default. */ }
+      setLanguage(savedLanguage);
+    })();
   </script>
 </body>
 </html>
